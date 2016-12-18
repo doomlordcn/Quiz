@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,8 +12,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mTrueBtn;
     private Button mFalseBtn;
-    private Button mNextBtn;
-    private Button mPreviousBtn;
+    private ImageButton mNextBtn;
+    private ImageButton mPreviousBtn;
     private TextView mQuestionTextView;
     private Question[] mQuestions=new Question[]{
             new Question(R.string.question_oceans, true),
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mNextBtn=(Button) findViewById(R.id.next_button);
+        mNextBtn=(ImageButton) findViewById(R.id.next_button);
         mNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mPreviousBtn=(Button)findViewById(R.id.previous_button);
+        mPreviousBtn=(ImageButton)findViewById(R.id.previous_button);
         mPreviousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private void CheckAnswer(boolean userPressTrue)
     {
         boolean answer=mQuestions[mCurrentIndex].isAnswerTrue();
-        int messageResId=0;
+        int messageResId;
         if (answer==userPressTrue){
             messageResId=R.string.correct_toast;
         }else{
