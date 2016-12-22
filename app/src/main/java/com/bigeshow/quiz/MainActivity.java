@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mCheatBtn;
     private static final String TAG="QuizActivity";
     private static final String KEY_INDEX="index";
+    private static final String KEY_CHEAT="cheat";
     private static final int REQUEST_CODE_CHEAT = 0;
     private boolean mIsCheater;
     private Question[] mQuestions=new Question[]{
@@ -38,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         mTrueBtn=(Button) findViewById(R.id.true_button);
         mFalseBtn=(Button) findViewById(R.id.false_button);
         mQuestionTextView=(TextView) findViewById(R.id.question_text_view);
-        mIsCheater=false;
         if(savedInstanceState!=null){
             mCurrentIndex=savedInstanceState.getInt(KEY_INDEX);
+            mIsCheater=savedInstanceState.getBoolean(KEY_CHEAT,false);
         }
         UpdateQuestion();
         mQuestionTextView.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         Log.i(TAG, "onSaveInstanceState: called");
         outState.putInt(KEY_INDEX,mCurrentIndex);
+        outState.putBoolean(KEY_CHEAT,mIsCheater);
     }
 
     @Override
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
     {
         boolean answer=mQuestions[mCurrentIndex].isAnswerTrue();
         int messageResId;
-        if(mIsCheater){
+        if(mIsCheater||mQuestions[mCurrentIndex].isCheated()){
             messageResId=R.string.judgment_toast;
         }else{
             if (answer==userPressTrue){
@@ -165,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             mIsCheater=CheatActivity.wasAnswerShown(data);
+            mQuestions[mCurrentIndex].setCheated(mIsCheater);
         }
     }
 }

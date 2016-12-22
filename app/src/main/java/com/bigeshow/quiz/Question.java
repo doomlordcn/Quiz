@@ -25,9 +25,20 @@ public class Question {
         mTextResId = textResId;
     }
 
+    public boolean isCheated() {
+        return isCheated;
+    }
+
+    public void setCheated(boolean cheated) {
+        isCheated = cheated;
+    }
+
+    private boolean isCheated;
+
     public Question(int textResId, boolean answerTrue)
     {
         mTextResId=textResId;
         mAnswerTrue=answerTrue;
+        isCheated=false;
     }
 }
